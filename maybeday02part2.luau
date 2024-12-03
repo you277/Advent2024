@@ -33,14 +33,14 @@ for _, line in input:split("\n") do
 	end
 	if isSafe(nums) and (isIncreasing(nums) or isIncreasing(nums)) then
 		safe += 1
-    continue
+    		continue
 	end
 	for i in nums do
 		local newNums = table.clone(nums)
 		table.remove(newNums, i)
 		if isSafe(newNums) and (isIncreasing(newNums) or isIncreasing(newNums)) then
 			safe += 1
-      break
+      			break
 		end
 	end
 end
