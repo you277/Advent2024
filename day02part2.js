@@ -1,67 +1,29 @@
-// still not correct
-
 const fs = require("fs")
 
 const data = fs.readFileSync("input", "utf-8")
 
-function iter(data, callback) {
-    for (let i = 1; i < data.nums.length; i++) {
-        if (!callback(data.nums[i - 1], data.nums[i])) {
-            // return false
-            if (data.ignored) return false
-            data.ignored = true
-            data.nums.splice(i, 1)
-            i--
+function isIncreasing(nums) {
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] > nums[i - 1]) {
+            return false
         }
     }
     return true
 }
 
-function isIncreasing(data) {
-    return iter(data, (a, b) => a < b)
-    for (let i = 1; i < data.nums.length; i++) {
-        if (data.nums[i] > data.nums[i - 1]) {
-            if (data.ignored) {
-                return false
-            }
-            data.ignored = true
-            data.nums.splice(i, 1)
-            i--
+function isDecreasing(nums) {
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] < nums[i - 1]) {
+            return false
         }
     }
     return true
 }
 
-function isDecreasing(data) {
-    return iter(data, (a, b) => a > b)
-    for (let i = 1; i < data.nums.length; i++) {
-        if (data.nums[i] < data.nums[i - 1]) {
-            if (data.ignored) {
-                return false
-            }
-            data.ignored = true
-            data.nums.splice(i, 1)
-            i--
-        }
-    }
-    return true
-}
-
-function isSafe(data) {
-    return iter(data, (a, b) => {
-        let diff = Math.abs(a - b)
-        return diff >= 1 && diff <= 3
-    })
-    for (let i = 1; i < data.nums.length; i++) {
-        let diff = Math.abs(data.nums[i] - data.nums[i - 1])
-        if (diff < 1 || diff > 3) {
-            if (data.ignored) {
-                return false
-            }
-            data.nums.ignored = true
-            data.nums.splice(i, 1)
-            i--
-        }
+function isSafe(nums) {
+    for (let i = 1; i < nums.length; i++) {
+        let diff = Math.abs(nums[i] - nums[i - 1])
+        if (diff < 1 || diff > 3) return false
     }
     return true
 }
@@ -69,11 +31,18 @@ function isSafe(data) {
 let safe = 0
 
 for (let line of data.split("\n")) {
-    let lines = line.split(" ")
-    if (lines[0] === "") continue
-    let data = {nums: lines.map(n => parseInt(n)), ignored: false}
-    if (isSafe(data) && ((isIncreasing(data) || isDecreasing(data)))) {
+    let nums = line.split(" ").map(n => parseInt(n))
+    if (isSafe(nums) && (isIncreasing(nums) || isDecreasing(nums))) {
         safe++
+    } else {
+        for (let i in nums) {
+            let epic = [...nums]
+            epic.splice(i, 1)
+            if (isSafe(epic) && (isIncreasing(epic) || isDecreasing(epic))) {
+                safe++
+                break
+            }
+        }
     }
 }
 
