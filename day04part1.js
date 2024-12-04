@@ -35,34 +35,23 @@ function joinSeq(startX, startY, xStep, yStep, stepAmt) {
     return chars.join("")
 }
 
+let amount = 0
+
 function pls(stepAmt, callback) {
     for (let i = 0; i < stepAmt; i++) {
-        callback(i)
+        let wow = callback(i)
+        if (wow == "XMAS" || wow == "SAMX") {
+            amount++
+        }
     }
 }
 
-let amount = 0
-
 for (let x in grid) {
     for (let y in grid[x]) {
-        const list = []
-        pls(4, i => {
-            list.push(joinSeq(x - 4 + i, y, 1, 0, 8))
-        })
-        pls(4, i => {
-            list.push(joinSeq(x, y - 4 + i, 0, 1, 8))
-        })
-        pls(4, i => {
-            list.push(joinSeq(x - 4 + i, y - 4 + i, 1, 1, 8))
-        })
-        pls(4, i => {
-            list.push(joinSeq(x + 4 - i, y - 4 + i, -1, 1, 8))
-        })
-        for (let a of list) {
-            if (a == "XMAS" || a == "SAMX") {
-                amount++
-            }
-        }
+        pls(4, i => joinSeq(x - 4 + i, y, 1, 0, 8))
+        pls(4, i => joinSeq(x, y - 4 + i, 0, 1, 8))
+        pls(4, i => joinSeq(x - 4 + i, y - 4 + i, 1, 1, 8))
+        pls(4, i => joinSeq(x + 4 - i, y - 4 + i, -1, 1, 8))
     }
 }
 
