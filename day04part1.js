@@ -4,7 +4,7 @@ const data = fs.readFileSync("input", "utf-8")
 
 let grid = []
 
-for (let line of data.split("\r\n")) {
+for (let line of data.split("\n")) {
     let column = []
     for (let i = 0; i < line.length; i++) {
         column.push(line.charAt(i))
@@ -18,42 +18,37 @@ function get(x, y) {
     return grid[x][y]
 }
 
-function joinSeq(startX, startY, xStep, yStep, stepAmt) {
+let amount = 0
+
+function checkSeq(startX, startY, xStep, yStep) {
     const chars = []
-    let x = startX
-    let y = startY
-    for (let i = 0; i < stepAmt; i++) {
+    let x = parseInt(startX) // theyre strings idk why
+    let y = parseInt(startY)
+    for (let i = 0; i < 4; i++) {
         chars.push(get(x, y))
         x += xStep
         y += yStep
     }
-    // for (let x = startX; x <= endX; x++) {
-    //     for (let y = startY; y <= endY; y++) {
-    //         chars.push(get(x, y))
-    //     }
-    // }
-    return chars.join("")
-}
-
-let amount = 0
-
-function pls(stepAmt, callback) {
-    for (let i = 0; i < stepAmt; i++) {
-        let wow = callback(i)
-        if (wow == "XMAS" || wow == "SAMX") {
-            amount++
-        }
+    let result = chars.join("")
+    if (result == "XMAS" || result == "SAMX") {
+        amount++
     }
 }
 
 for (let x in grid) {
     for (let y in grid[x]) {
-        pls(4, i => joinSeq(x - 4 + i, y, 1, 0, 8))
-        pls(4, i => joinSeq(x, y - 4 + i, 0, 1, 8))
-        pls(4, i => joinSeq(x - 4 + i, y - 4 + i, 1, 1, 8))
-        pls(4, i => joinSeq(x + 4 - i, y - 4 + i, -1, 1, 8))
+        if (grid[x][y] != "X") continue
+        // console.log(x, y)
+        checkSeq(x, y, 1, 0)     // horizontal
+        checkSeq(x, y, -1, 0)
+        checkSeq(x, y, 0, 1)     // vertical
+        checkSeq(x, y, 0, -1)
+
+        checkSeq(x, y, -1, -1)   // diagonals \
+        checkSeq(x, y, 1, 1)
+        checkSeq(x, y, 1, -1)    // diagonals /
+        checkSeq(x, y, -1, 1)
     }
 }
 
 console.log(amount)
-
