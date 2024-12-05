@@ -9,9 +9,7 @@ const updatePages = sections[1].split("\r\n").map(strList => strList.split(",").
 
 function arrEq(a, b) {
     for (let i in a) {
-        for (let v in b) {
-            if (a[i] !== b[i]) return false
-        }
+        if (a[i] !== b[i]) return false
     }
     return true
 }
