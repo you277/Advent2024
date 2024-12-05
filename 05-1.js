@@ -26,7 +26,6 @@ for (let pageList of updatePages) {
     })
     if (arrEq(origList, pageList)) {
         result += pageList[Math.floor(pageList.length/2)]
-        correct++
     }
 }
 
