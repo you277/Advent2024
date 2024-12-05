@@ -1,3 +1,5 @@
+// not work
+
 const fs = require("fs")
 
 const data = fs.readFileSync("input", "utf-8")
@@ -37,6 +39,8 @@ function part1() {
     }
 }
 
+// if the amount of times theres a rule where the number is on the left side
+// is half of the length of the update, then it is the middle number
 function getMiddleNum(arr) {
     for (let n1 of arr) {
         let matches = 0
