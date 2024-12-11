@@ -35,12 +35,12 @@ function branch(x, y, reached) {
     }
 }
 
-let score = 0
+let rating = 0
 
 for (let trailHead of trailHeads) {
     let reached = []
     branch(trailHead.x, trailHead.y, reached)
-    score += reached.length
+    rating += reached.length
 }
 
-console.log(score)
+console.log(rating)
