@@ -30,6 +30,8 @@ for (let entry of entries) {
     let prizeY = entry.prize.y
 
     /*
+        initial solution: this worked for the example but not the real input
+
         prizeX = aX*a + bX*b
         prizeY = aY*a + bY*b
 
@@ -50,15 +52,31 @@ for (let entry of entries) {
         a: plug into equation above
     */
 
-        let b = (prizeX - aX*(prizeX - prizeY)/(aX - aY))/(-aX*(bX - bY)/(aX - aY) + bX)
-        let a = (prizeX - prizeY - (bX - bY)*b)/(aX - aY)
-        if (a%1 === 0) {
-            // found the answer for this one!!
-            price += a*3 + b
-        } else {
-            // this doesnt have a match
-        }
-        // console.log(a, b, aX*a + bX*b, aY*a + bY*b)
+    /*
+        alternative: this one worked for both the example and the real input yay
+
+        prizeX = aX*a + bX*b
+        prizeY = aY*a + bY*b
+
+        a = (prizeX - bX*b)/aX
+        a = (prizeY - bY*b)/aY
+
+        (prizeX - bX*b)/aX = (prizeY - bY*b)/aY
+
+        (prizeX - bX*b)*aY = (prizeY - bY*b)*aX
+        prizeX*aY - bX*b*aY = prizeY*aX - bY*b*aX
+
+        prizeX*aY - prizeY*aX = -bY*b*aX + bX*b*aY
+        prizeX*aY - prizeY*aX = b*(-bY*aX + bX*aY)
+
+        (prizeX*aY - prizeY*aX)/(-bY*aX + bX*aY) = b
+    */
+
+    // let b = (prizeX - aX*(prizeX - prizeY)/(aX - aY))/(-aX*(bX - bY)/(aX - aY) + bX)
+    // let a = (prizeX - prizeY - (bX - bY)*b)/(aX - aY)
+    let b = (prizeX*aY - prizeY*aX)/(-bY*aX + bX*aY)
+    let a = (prizeX - bX*b)/aX
+    if (a%1 === 0 && b%1 === 0) price += a*3 + b
 }
 
 console.log(price)
