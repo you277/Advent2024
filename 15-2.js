@@ -1,3 +1,5 @@
+// doesnt work
+
 const fs = require("fs")
 const readline = require("node:readline")
 
