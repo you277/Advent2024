@@ -1,5 +1,6 @@
+// doesnt work
+
 const fs = require("fs")
-const readline = require("node:readline")
 
 const fileData = fs.readFileSync("input", "utf-8")
 
